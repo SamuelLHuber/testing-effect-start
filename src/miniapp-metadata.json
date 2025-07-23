@@ -1,0 +1,14 @@
+{
+  "version": "next",
+  "imageUrl": "https://dtech.vision/miniapp.png",
+  "button": {
+    "title": "Check my wallet",
+    "action": {
+      "type": "launch_frame",
+      "name": "dTech x Zerion",
+      "url": "https://worth-arrested-salvation-citizenship.trycloudflare.com",
+      "splashImageUrl": "https://dtech.vision/icon.png",
+      "splashBackgroundColor": "#f7f7f7"
+    }
+  }
+}

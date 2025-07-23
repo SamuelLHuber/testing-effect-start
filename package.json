@@ -1,0 +1,52 @@
+{
+  "name": "effect-start-preact-example",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "bun src/server.ts",
+    "dev": "bun --hot --no-clear-screen src/server.ts",
+    "lint": "eslint . --fix && dprint fmt",
+    "check": "eslint . && dprint check",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@effect/platform": "^0.84.11",
+    "@effect/platform-bun": "^0.67.3",
+    "@farcaster/miniapp-sdk": "^0.1.7",
+    "@preact/signals": "^2.2.0",
+    "@tanstack/react-query": "^5.83.0",
+    "daisyui": "^5.0.46",
+    "effect": "^3.16.12",
+    "effect-start": "github:nounder/effect-start",
+    "preact": "^10.26.8",
+    "preact-iso": "^2.9.1",
+    "viem": "2.x",
+    "wagmi": "^2.16.0"
+  },
+  "devDependencies": {
+    "@effect/eslint-plugin": "^0.3.2",
+    "@effect/language-service": "^0.28.2",
+    "@effect/vitest": "^0.25.0",
+    "@eslint/compat": "^1.3.1",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.31.0",
+    "@tailwindcss/node": "^4.1.8",
+    "@types/bun": "^1.2.15",
+    "@typescript-eslint/eslint-plugin": "^8.38.0",
+    "@typescript-eslint/parser": "^8.38.0",
+    "dprint": "^0.50.1",
+    "eslint": "^9.31.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-codegen": "^0.33.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-local-rules": "^3.0.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-sort-destructure-keys": "^2.0.0",
+    "prettier": "^3.6.2",
+    "vitest": "^3.2.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
