@@ -1,4 +1,4 @@
-import { Profile } from "../components/Profile"
+import { Wallet } from "../components/Wallet"
 import Background from "./background.png"
 
 export default function() {
@@ -13,7 +13,7 @@ export default function() {
       }}
     >
       <div>
-        <Profile />
+        <Wallet />
         <div className="card w-96 rounded-2xl bg-base-200 shadow-sm">
           <div className="card-body items-center">
             <div className="w-24 mask mask-circle">

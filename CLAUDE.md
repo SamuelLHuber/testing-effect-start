@@ -1,6 +1,71 @@
-# Claude Instructions
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Development Commands
+
+- **Start development server**: `bun dev` (hot reload enabled, no clear screen)  
+- **Production server**: `bun start`
+- **Lint and format**: `bun run lint` (runs ESLint with auto-fix + dprint formatting)
+- **Check code quality**: `bun run check` (ESLint + dprint check without fixes)
+- **Run tests**: `bun test` (uses Vitest)
+
+## Architecture Overview
+
+This is a **Zerion Portfolio Mini App** built with:
+
+### Core Stack
+- **Runtime**: Bun with TypeScript
+- **Framework**: Effect-ts with effect-start for server/client bundling
+- **UI**: Preact (aliased as React) with Preact-ISO for routing
+- **Styling**: TailwindCSS with DaisyUI components
+- **State**: React Query + Wagmi for wallet connection
+- **Build**: effect-start bundler with Bun Tailwind plugin
+
+### Key Architecture Patterns
+- **Effect-ts**: Functional programming with Effect for server layer composition
+- **Preact Compatibility**: Uses React ecosystem libraries via Preact compat layer (tsconfig paths)  
+- **File-based Routing**: Routes defined in `src/routes/` with `_manifest.ts` pattern
+- **Wallet Integration**: Wagmi config for Web3 wallet connections with React Query
+
+### Project Structure
+- `src/App.tsx` - Main app with providers (Wagmi, QueryClient, Router)
+- `src/server.ts` - Effect-ts server layer with bundling configuration  
+- `src/routes/` - File-based routing with layout and page components
+- `src/components/` - Reusable UI components (Wallet, etc.)
+- `src/config/wagmi.ts` - Web3 wallet configuration
+
+### Code Style & Linting
+- **ESLint**: Comprehensive config with Effect-ts plugin and custom local rules
+- **Formatting**: dprint with TypeScript/JSON/Markdown support (80 char line width)
+- **Import Sorting**: Custom rules for Effect-ts imports and destructuring
+- **Type Safety**: Strict TypeScript with Effect-ts patterns enforced
+
+### External Dependencies
+- **Node.js modules**: Extensively externalized in bundler config to avoid browser conflicts
+- **Zerion API**: Portfolio data fetching (see spec/SPEC.md for API details)
+- **Farcaster**: Mini app SDK integration
+
+## Zerion API Integration
+
+The app displays wallet portfolio data using Zerion's API:
+- **Positions**: `/v1/wallets/{address}/positions/` for holdings data
+- **Portfolio**: `/v1/wallets/{address}/portfolio` for total values  
+- **PnL**: `/v1/wallets/{address}/pnl/` for profit/loss metrics
+
+UI shows percentage-based donut chart (max 7 positions + "Others") with realized/unrealized gains below. See `spec/SPEC.md` for complete API documentation and `agent/zerion-llms.txt` for reference materials.
+
+## Development Notes
+
+- Uses Bun's hot reload for development
+- Effect-ts server serves both API and static assets
+- Preact compat layer enables React ecosystem usage
+- Custom ESLint rules enforce Effect-ts patterns and code quality
+- All Node.js modules externalized to prevent browser bundling issues# Claude Instructions
 
 An always make sure to refer to the [COLOR SCHEME DEFINITION AND BRAND GUIDELINES](./COLORS.md) when doing any frontend, design or color work. You don't need to do colors or come up with gradients. We can use the instructions in COLORS.md to create a consistent and visually appealing design in line with dTech's premium boutique identity.
+
+## Project structure
 
 ## 🚨 HIGHEST PRIORITY RULES 🚨
 
