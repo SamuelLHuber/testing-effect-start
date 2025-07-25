@@ -1,10 +1,8 @@
 import { Layer } from "effect"
-import { BunTailwindPlugin, FileRouter, Start } from "effect-start"
-
-const routerLayer = FileRouter.layer(import.meta.resolve("routes"))
+import { BunTailwindPlugin, Start } from "effect-start"
 
 export default Layer.mergeAll(
-  // Start.router(() => import("./routes/_manifest")),
+  Start.router(() => import("./routes/_manifest")),
   Start.bundleClient({
     entrypoints: ["src/index.html"],
     plugins: [BunTailwindPlugin.make()],
@@ -82,10 +80,9 @@ export default Layer.mergeAll(
       "v8",
       "node:v8",
       "worker_threads",
-      "node:worker_threads"
-    ]
+      "node:worker_threads",
+    ],
   }),
-  routerLayer
 )
 
 if (import.meta.main) {

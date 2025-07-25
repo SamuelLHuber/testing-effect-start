@@ -25,16 +25,19 @@ To fetch the data needed to compile the pie chart we are using the Zerion API.
 
 To get the total holdings of the User Zerion has an API endpoint to listwalletpopsitions with the full [reference docs on the web](https://developers.zerion.io/reference/listwalletpositions)
 
-A curl command querying the API looks like 
+A curl command querying the API looks like
+
 ```
 curl --request GET \
      --url 'https://api.zerion.io/v1/wallets/%3Cinsertaddress%3E/positions/?filter[positions]=only_simple&currency=usd&filter[chain_ids]=&filter[trash]=only_non_trash&sort=value' \
      --header 'accept: application/json' \
      --header 'authorization: Basic
 ```
+
 where you can see it's a GET request with all options being put in as url parameters, which we don't need to adjust. though the address needs to be in between `.../wallets/<here>/positions/...`.
 
 For wallet `0x09CEdb7bb69f9F6DF646dBa107D2bAACda93D6C9` the request is
+
 ```
 curl --request GET \
      --url 'https://api.zerion.io/v1/wallets/0x09CEdb7bb69f9F6DF646dBa107D2bAACda93D6C9/positions/?filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=value' \
@@ -90,7 +93,7 @@ and the response returned
       }
     },
     {
-      "type": "positions", 
+      "type": "positions",
       "id": "0x38b88d6568d61556d33592ad7bc24e89a7fb6691-base-asset-asset",
       "attributes": {
         "name": "Asset",
@@ -107,7 +110,7 @@ and the response returned
         },
         "fungible_info": {
           "name": "Operating System",
-          "symbol": "OPSYS", 
+          "symbol": "OPSYS",
           "icon": {
             "url": "https://cdn.zerion.io/b9056b74-947e-4b78-a3b2-387e4cd58bf3.png"
           },
@@ -135,7 +138,8 @@ and the response returned
 The total value of positions we can sum up or call the Zerion portfolio API endpoint getwalletportfolio with docs
 available [here on getwalletportfolio](https://developers.zerion.io/reference/getwalletportfolio).
 
-A curl request looks like 
+A curl request looks like
+
 ```
 curl --request GET \
      --url 'https://api.zerion.io/v1/wallets/0x09CEdb7bb69f9F6DF646dBa107D2bAACda93D6C9/portfolio?filter[positions]=only_simple&currency=usd' \
@@ -184,7 +188,8 @@ where the response is the following json of which we care about the data:
 
 To get the total Profit and loss as well as unrelized gain, fees paid and how muhc was net invested sent and recieved we can use the pnl endpoint.
 
-A curl request looks like 
+A curl request looks like
+
 ```
 curl --request GET \
      --url 'https://api.zerion.io/v1/wallets/0x09cedb7bb69f9f6df646dba107d2baacda93d6c9/pnl/?currency=usd' \
@@ -220,4 +225,3 @@ with the response being the following data that contains wallet_pnl data we can 
 
 To read about the Zerion API refer to [the llms.txt file with references](../agent/zerion-llms.txt).
 You are allowed to request any documentation page and look at it for API docs about portfolio data gathering using Zerion APIs.
-
