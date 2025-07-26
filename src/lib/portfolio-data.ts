@@ -1,10 +1,14 @@
-import type { ZerionPnLResponse, ZerionPortfolioResponse, ZerionPositionsResponse } from "./zerion-schemas"
+import type {
+  ZerionPnLResponse,
+  ZerionPortfolioResponse,
+  ZerionPositionsResponse,
+} from "./zerion-schemas"
 import type { PortfolioData, ProcessedPosition } from "./zerion-types"
 
 // Process Zerion positions data into chart-ready format
 export function processPositionsData(
   positionsResponse: ZerionPositionsResponse,
-  portfolioResponse: ZerionPortfolioResponse
+  portfolioResponse: ZerionPortfolioResponse,
 ): Array<ProcessedPosition> {
   const totalValue = portfolioResponse.data.attributes.total.positions
 
@@ -25,7 +29,7 @@ export function processPositionsData(
       value: position.attributes.value!,
       percentage: (position.attributes.value! / totalValue) * 100,
       icon: position.attributes.fungible_info.icon?.url || "",
-      verified: position.attributes.fungible_info.flags.verified
+      verified: position.attributes.fungible_info.flags.verified,
     }))
     .sort((a, b) => b.value - a.value) // Sort by value descending
 }
@@ -38,7 +42,7 @@ export function groupPositionsForChart(positions: Array<ProcessedPosition>): {
   if (positions.length <= 6) {
     return {
       topPositions: positions,
-      others: null
+      others: null,
     }
   }
 
@@ -48,7 +52,7 @@ export function groupPositionsForChart(positions: Array<ProcessedPosition>): {
   const othersValue = remaining.reduce((sum, pos) => sum + pos.value, 0)
   const othersPercentage = remaining.reduce(
     (sum, pos) => sum + pos.percentage,
-    0
+    0,
   )
 
   const others: ProcessedPosition = {
@@ -57,19 +61,19 @@ export function groupPositionsForChart(positions: Array<ProcessedPosition>): {
     value: othersValue,
     percentage: othersPercentage,
     icon: "", // No icon for others
-    verified: true
+    verified: true,
   }
 
   return {
     topPositions: topSix,
-    others
+    others,
   }
 }
 
 // Calculate PnL percentages relative to total portfolio value
 export function processPnLData(
   pnlResponse: ZerionPnLResponse,
-  totalValue: number
+  totalValue: number,
 ): {
   realizedGainPercent: number
   unrealizedGainPercent: number
@@ -77,7 +81,7 @@ export function processPnLData(
   if (totalValue === 0) {
     return {
       realizedGainPercent: 0,
-      unrealizedGainPercent: 0
+      unrealizedGainPercent: 0,
     }
   }
 
@@ -91,7 +95,7 @@ export function processPnLData(
 
   return {
     realizedGainPercent: (realizedGain / totalValue) * 100,
-    unrealizedGainPercent: (unrealizedGain / totalValue) * 100
+    unrealizedGainPercent: (unrealizedGain / totalValue) * 100,
   }
 }
 
@@ -99,7 +103,7 @@ export function processPnLData(
 export function processCompletePortfolioData(
   positionsResponse: ZerionPositionsResponse,
   portfolioResponse: ZerionPortfolioResponse,
-  pnlResponse: ZerionPnLResponse
+  pnlResponse: ZerionPnLResponse,
 ): PortfolioData {
   const totalValue = portfolioResponse.data.attributes.total.positions
 
@@ -110,7 +114,7 @@ export function processCompletePortfolioData(
   // Process PnL
   const { realizedGainPercent, unrealizedGainPercent } = processPnLData(
     pnlResponse,
-    totalValue
+    totalValue,
   )
 
   return {
@@ -119,7 +123,7 @@ export function processCompletePortfolioData(
     others,
     totalValue,
     realizedGainPercent,
-    unrealizedGainPercent
+    unrealizedGainPercent,
   }
 }
 
@@ -133,7 +137,7 @@ export function generateChartColors(count: number): Array<string> {
     "#EF4444", // Red
     "#8B5CF6", // Purple
     "#06B6D4", // Cyan
-    "#6B7280" // Gray (for Others)
+    "#6B7280", // Gray (for Others)
   ]
 
   // Return colors up to the count needed

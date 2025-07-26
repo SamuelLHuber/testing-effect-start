@@ -8,7 +8,8 @@ import { useCompletePortfolio } from "../hooks/usePortfolio"
 
 export default function() {
   const { address, isConnected } = useAccount()
-  const { data: portfolioData, error, isError, isLoading } = useCompletePortfolio(address)
+  const { data: portfolioData, error, isError, isLoading } =
+    useCompletePortfolio(address)
 
   const handleShare = () => {
     // TODO: Implement share functionality
@@ -88,7 +89,7 @@ export default function() {
                           ...portfolioData.topPositions,
                           ...(portfolioData.others
                             ? [portfolioData.others]
-                            : [])
+                            : []),
                         ]}
                         size={280}
                         strokeWidth={45}
@@ -123,7 +124,7 @@ export default function() {
                         onClick={() => {
                           // This will trigger wallet disconnect
                           const walletComponent = document.querySelector(
-                            "[data-testid=\"wallet-disconnect\"]"
+                            "[data-testid=\"wallet-disconnect\"]",
                           ) as HTMLButtonElement
                           walletComponent?.click()
                         }}

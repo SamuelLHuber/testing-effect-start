@@ -21,7 +21,7 @@ export const Routes = Pages.map((page) => {
           ? `${acc}/:**`
           : `${acc}/:${seg.slice(1)}`
         : `${acc}/${seg}`,
-    ""
+    "",
   )
 
   const layouts = collectLayouts(page)
@@ -37,7 +37,7 @@ export const Routes = Pages.map((page) => {
           const props = {
             params: route.params,
             query: route.query,
-            path: route.path
+            path: route.path,
           }
 
           return (
@@ -49,13 +49,13 @@ export const Routes = Pages.map((page) => {
           )
         }
       },
-      (props: any) => <Page {...props} />
+      (props: any) => <Page {...props} />,
     )
     : (props: any) => <Page {...props} />
 
   return {
     path,
-    component: Component
+    component: Component,
   }
 })
 

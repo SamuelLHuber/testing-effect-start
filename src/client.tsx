@@ -3,5 +3,5 @@ import { App } from "./App.tsx"
 
 render(
   <App />,
-  document.getElementById("app")!
+  document.getElementById("app")!,
 )

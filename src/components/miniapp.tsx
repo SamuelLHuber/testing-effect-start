@@ -39,7 +39,7 @@ export function MiniAppProvider({ children }: MiniAppProviderProps) {
       } catch (err) {
         console.error("Failed to initialize MiniApp SDK:", err)
         setError(
-          err instanceof Error ? err.message : "Failed to load MiniApp SDK"
+          err instanceof Error ? err.message : "Failed to load MiniApp SDK",
         )
       }
     }
@@ -49,7 +49,7 @@ export function MiniAppProvider({ children }: MiniAppProviderProps) {
 
   const contextValue: MiniAppContextValue = {
     isReady,
-    error
+    error,
   }
 
   return (

@@ -2,7 +2,7 @@ import { Config, Effect, Redacted, Schedule, Schema } from "effect"
 
 // Simple retry configuration
 const retrySchedule = Schedule.exponential("100 millis").pipe(
-  Schedule.intersect(Schedule.recurs(3))
+  Schedule.intersect(Schedule.recurs(3)),
 )
 
 // Zerion API configuration
@@ -30,38 +30,39 @@ export const zerionFetch = (path: string) =>
               "accept": "application/json",
               "authorization": `Basic ${
                 Buffer.from(`${Redacted.value(redactedApiKey)}:`).toString(
-                  "base64"
+                  "base64",
                 )
-              }`
-            }
+              }`,
+            },
           }),
-        catch: (error) => new Error(`Network error: ${String(error)}`)
+        catch: (error) => new Error(`Network error: ${String(error)}`),
       })
 
       if (!response.ok) {
         // Try to get error details from response body
         const errorText = yield* Effect.tryPromise({
           try: () => response.text(),
-          catch: () => "Unable to read error response"
+          catch: () => "Unable to read error response",
         })
 
         Effect.logError(`[Zerion API] Error response: ${errorText}`)
 
         return yield* Effect.fail(
           new Error(
-            `Zerion API error: ${response.status} ${response.statusText} - ${errorText}`
-          )
+            `Zerion API error: ${response.status} ${response.statusText} - ${errorText}`,
+          ),
         )
       }
 
       // Check if response has content
       const responseText = yield* Effect.tryPromise({
         try: () => response.text(),
-        catch: (error) => new Error(`Failed to read response: ${String(error)}`)
+        catch: (error) =>
+          new Error(`Failed to read response: ${String(error)}`),
       })
 
       yield* Effect.logInfo(
-        `[Zerion API] Response length: ${responseText.length}`
+        `[Zerion API] Response length: ${responseText.length}`,
       )
       // yield* Effect.logInfo(
       //   `[Zerion API] Response preview: ${responseText.slice(0, 200)}...`
@@ -69,7 +70,7 @@ export const zerionFetch = (path: string) =>
 
       if (!responseText || responseText.trim() === "") {
         return yield* Effect.fail(
-          new Error(`Empty response from Zerion API for: ${url}`)
+          new Error(`Empty response from Zerion API for: ${url}`),
         )
       }
 
@@ -79,18 +80,21 @@ export const zerionFetch = (path: string) =>
         .pipe(
           Effect.mapError((error) =>
             new Error(
-              `JSON parse error for response "${responseText.slice(0, 100)}...": ${error.message}`
+              `JSON parse error for response "${
+                responseText.slice(0, 100)
+              }...": ${error.message}`,
             )
-          )
+          ),
         )
 
       return data
     })
     .pipe(
       Effect.retry(retrySchedule),
-      Effect.timeout("10 seconds")
+      Effect.timeout("10 seconds"),
     )
 
 // Schema validation helpers
-export const validateResponse = <A>(schema: Schema.Schema<A, unknown>) => (data: unknown): Effect.Effect<A, Error> =>
-  Schema.decode(schema)(data)
+export const validateResponse =
+  <A>(schema: Schema.Schema<A, unknown>) =>
+  (data: unknown): Effect.Effect<A, Error> => Schema.decode(schema)(data)

@@ -75,7 +75,6 @@ export function DonutChart(
     )
   }
 
-  const center = size / 2
   const radius = (size - strokeWidth) / 2
   const colors = generateChartColors(positions.length)
 
@@ -94,13 +93,22 @@ export function DonutChart(
     }
   })
 
+  const svgWidth = size + 200 // Increased from 120 to 200 for longer labels
+  const svgHeight = size + 120 // Increased from 80 to 120 for more vertical space
+  const svgCenter = svgWidth / 2
+
   return (
-    <div className="relative inline-block">
-      <svg width={size} height={size} className="transform -rotate-90">
+    <div className="relative w-full overflow-visible">
+      <svg
+        width="100%"
+        height={svgHeight}
+        viewBox={`0 0 ${svgWidth} ${svgHeight}`}
+        className="transform -rotate-90 overflow-visible"
+      >
         {/* Background circle */}
         <circle
-          cx={center}
-          cy={center}
+          cx={svgCenter}
+          cy={svgHeight / 2}
           r={radius}
           fill="none"
           stroke="hsl(var(--b3))"
@@ -109,9 +117,10 @@ export function DonutChart(
 
         {/* Chart segments */}
         {segments.map((segment, index) => {
+          const chartCenterY = svgHeight / 2
           const path = createArcPath(
-            center,
-            center,
+            svgCenter,
+            chartCenterY,
             radius,
             segment.startAngle,
             segment.endAngle,
@@ -120,18 +129,50 @@ export function DonutChart(
           const isHovered = hoveredIndex === index
           const strokeWidthAdjusted = isHovered ? strokeWidth + 4 : strokeWidth
 
+          // Calculate text position at the middle of the arc, outside the donut
+          const midAngle = (segment.startAngle + segment.endAngle) / 2
+          const labelRadius = radius + strokeWidth + 25 // Increased from 15 to 25 for more spacing
+          const labelPosition = polarToCartesian(
+            svgCenter,
+            chartCenterY,
+            labelRadius,
+            midAngle,
+          )
+
+          // Only show label if segment is large enough (>3% of chart)
+          const showLabel = segment.position.percentage > 3
+
           return (
-            <path
-              key={segment.position.symbol}
-              d={path}
-              fill="none"
-              stroke={segment.color}
-              strokeWidth={strokeWidthAdjusted}
-              strokeLinecap="round"
-              className="transition-all duration-200 cursor-pointer"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            />
+            <g key={segment.position.symbol}>
+              <path
+                d={path}
+                fill="none"
+                stroke={segment.color}
+                strokeWidth={strokeWidthAdjusted}
+                strokeLinecap="round"
+                className="transition-all duration-200 cursor-pointer"
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              />
+              {showLabel && (
+                <text
+                  x={labelPosition.x}
+                  y={labelPosition.y}
+                  fontSize="11"
+                  fontWeight="600"
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="pointer-events-none select-none fill-base-content"
+                  style={{
+                    transform: "rotate(90deg)",
+                    transformOrigin:
+                      `${labelPosition.x}px ${labelPosition.y}px`,
+                  }}
+                >
+                  {segment.position.symbol}
+                </text>
+              )}
+            </g>
           )
         })}
       </svg>
@@ -158,7 +199,7 @@ export function DonutChart(
                 Portfolio
               </div>
               <div className="text-lg font-bold text-base-content">
-                {positions.length} Assets
+                {positions.length}+ Assets
               </div>
             </>
           )}

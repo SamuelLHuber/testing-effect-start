@@ -18,7 +18,7 @@ export const GET = Effect
     if (!address) {
       return yield* HttpServerResponse.json(
         { error: "Address query parameter is required" },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -27,13 +27,15 @@ export const GET = Effect
     forwardParams.delete("address") // Remove address from forwarded params
     const queryString = forwardParams.toString()
 
-    const zerionPath = `/v1/wallets/${address}/pnl/${queryString ? `?${queryString}` : ""}`
+    const zerionPath = `/v1/wallets/${address}/pnl/${
+      queryString ? `?${queryString}` : ""
+    }`
 
     const rawData = yield* zerionFetch(zerionPath)
 
     // Validate response with schema
     const validatedData = yield* Schema.decodeUnknown(ZerionPnLResponseSchema)(
-      rawData
+      rawData,
     )
 
     return yield* HttpServerResponse.json(validatedData)
@@ -42,7 +44,7 @@ export const GET = Effect
     Effect.catchAll((error: Error) =>
       HttpServerResponse.json(
         { error: error.message },
-        { status: 500 }
+        { status: 500 },
       )
-    )
+    ),
   )
