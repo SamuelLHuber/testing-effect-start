@@ -7,8 +7,8 @@ export const config = createConfig({
   connectors: [injected()],
   transports: {
     [mainnet.id]: http(),
-    [sepolia.id]: http(),
-  },
+    [sepolia.id]: http()
+  }
 })
 
 declare module "wagmi" {

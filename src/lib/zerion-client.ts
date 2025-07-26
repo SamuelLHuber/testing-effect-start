@@ -1,14 +1,6 @@
-import {
-  HttpClient,
-  HttpClientRequest,
-  HttpClientResponse,
-} from "@effect/platform"
+import { HttpClient, HttpClientRequest, HttpClientResponse } from "@effect/platform"
 import { Config, Data, Effect, Redacted } from "effect"
-import type {
-  ZerionPnLResponse,
-  ZerionPortfolioResponse,
-  ZerionPositionsResponse,
-} from "./zerion-types"
+import type { ZerionPnLResponse, ZerionPortfolioResponse, ZerionPositionsResponse } from "./zerion-types"
 
 // Error types for Zerion API client
 export class ZerionApiError extends Data.TaggedError("ZerionApiError")<{
@@ -28,7 +20,7 @@ interface ZerionConfig {
 
 // Default configuration
 const DEFAULT_CONFIG: Omit<ZerionConfig, "apiKey"> = {
-  baseUrl: "https://api.zerion.io/v1",
+  baseUrl: "https://api.zerion.io/v1"
 }
 
 // Zerion API client class
@@ -38,7 +30,7 @@ export class ZerionClient {
   static make(apiKey: string): ZerionClient {
     return new ZerionClient({
       ...DEFAULT_CONFIG,
-      apiKey,
+      apiKey
     })
   }
 
@@ -47,16 +39,14 @@ export class ZerionClient {
     return HttpClientRequest.get(`${this.config.baseUrl}${path}`).pipe(
       HttpClientRequest.setHeaders({
         "accept": "application/json",
-        "authorization": `Basic ${
-          Buffer.from(`${this.config.apiKey}:`).toString("base64")
-        }`,
-      }),
+        "authorization": `Basic ${Buffer.from(`${this.config.apiKey}:`).toString("base64")}`
+      })
     )
   }
 
   // Execute request with error handling
   private executeRequest<T>(
-    request: HttpClientRequest.HttpClientRequest,
+    request: HttpClientRequest.HttpClientRequest
   ): Effect.Effect<T, ZerionApiError, HttpClient.HttpClient> {
     return Effect.gen(function*() {
       const client = yield* HttpClient.HttpClient
@@ -67,25 +57,25 @@ export class ZerionClient {
           (error) =>
             Effect.fail(
               new ZerionApiError({
-                message: `Request failed: ${error.message}`,
-              }),
-            ),
+                message: `Request failed: ${error.message}`
+              })
+            )
         ),
         Effect.catchTag("ResponseError", (error) =>
           Effect.fail(
             new ZerionApiError({
               message: `HTTP ${error.status}: ${error.statusText}`,
-              status: error.status,
-            }),
-          )),
+              status: error.status
+            })
+          ))
       )
 
       if (!HttpClientResponse.isSuccess(response)) {
         return yield* Effect.fail(
           new ZerionApiError({
             message: `API request failed with status ${response.status}`,
-            status: response.status,
-          }),
+            status: response.status
+          })
         )
       }
 
@@ -95,10 +85,10 @@ export class ZerionClient {
           (error) =>
             Effect.fail(
               new ZerionApiError({
-                message: `Failed to parse JSON response: ${error.message}`,
-              }),
-            ),
-        ),
+                message: `Failed to parse JSON response: ${error.message}`
+              })
+            )
+        )
       )
 
       return data as T
@@ -107,38 +97,38 @@ export class ZerionClient {
 
   // Get wallet positions
   getPositions(
-    address: string,
+    address: string
   ): Effect.Effect<
     ZerionPositionsResponse,
     ZerionApiError,
     HttpClient.HttpClient
   > {
     const request = this.createRequest(
-      `/wallets/${address}/positions/?filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=value`,
+      `/wallets/${address}/positions/?filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=value`
     )
     return this.executeRequest<ZerionPositionsResponse>(request)
   }
 
   // Get wallet portfolio
   getPortfolio(
-    address: string,
+    address: string
   ): Effect.Effect<
     ZerionPortfolioResponse,
     ZerionApiError,
     HttpClient.HttpClient
   > {
     const request = this.createRequest(
-      `/wallets/${address}/portfolio?filter[positions]=only_simple&currency=usd`,
+      `/wallets/${address}/portfolio?filter[positions]=only_simple&currency=usd`
     )
     return this.executeRequest<ZerionPortfolioResponse>(request)
   }
 
   // Get wallet PnL
   getPnL(
-    address: string,
+    address: string
   ): Effect.Effect<ZerionPnLResponse, ZerionApiError, HttpClient.HttpClient> {
     const request = this.createRequest(
-      `/wallets/${address}/pnl/?currency=usd`,
+      `/wallets/${address}/pnl/?currency=usd`
     )
     return this.executeRequest<ZerionPnLResponse>(request)
   }
@@ -160,9 +150,7 @@ export const ZerionClientLive = Effect
 export const getZerionClient = () => ZerionClientLive
 
 // Service interface for dependency injection
-export class ZerionService
-  extends Effect.Service<ZerionService>()("ZerionService", {
-    effect: ZerionClientLive,
-    dependencies: [],
-  })
-{}
+export class ZerionService extends Effect.Service<ZerionService>()("ZerionService", {
+  effect: ZerionClientLive,
+  dependencies: []
+}) {}

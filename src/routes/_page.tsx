@@ -8,8 +8,7 @@ import { useCompletePortfolio } from "../hooks/usePortfolio"
 
 export default function() {
   const { address, isConnected } = useAccount()
-  const { data: portfolioData, error, isError, isLoading } =
-    useCompletePortfolio(address)
+  const { data: portfolioData, error, isError, isLoading } = useCompletePortfolio(address)
 
   const handleShare = () => {
     // TODO: Implement share functionality
@@ -89,19 +88,11 @@ export default function() {
                           ...portfolioData.topPositions,
                           ...(portfolioData.others
                             ? [portfolioData.others]
-                            : []),
+                            : [])
                         ]}
                         size={280}
                         strokeWidth={45}
                       />
-                    </div>
-
-                    {/* Positions List */}
-                    <div className="bg-base-200 rounded-lg pt-6 pb-4 px-4">
-                      <h2 className="text-lg font-semibold text-base-content mb-4 text-center">
-                        Holdings Breakdown
-                      </h2>
-                      <PositionsList positions={portfolioData.positions} />
                     </div>
 
                     {/* PnL Display */}
@@ -110,6 +101,14 @@ export default function() {
                       unrealizedGainPercent={portfolioData
                         .unrealizedGainPercent}
                     />
+
+                    {/* Positions List */}
+                    <div className="bg-base-200 rounded-lg pt-6 pb-4 px-4">
+                      <h2 className="text-lg font-semibold text-base-content mb-4 text-center">
+                        Holdings Breakdown
+                      </h2>
+                      <PositionsList positions={portfolioData.positions} />
+                    </div>
 
                     {/* Wallet info footer */}
                     <div className="text-center py-4 border-t border-base-300">
@@ -124,7 +123,7 @@ export default function() {
                         onClick={() => {
                           // This will trigger wallet disconnect
                           const walletComponent = document.querySelector(
-                            "[data-testid=\"wallet-disconnect\"]",
+                            "[data-testid=\"wallet-disconnect\"]"
                           ) as HTMLButtonElement
                           walletComponent?.click()
                         }}

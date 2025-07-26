@@ -7,7 +7,7 @@ import type {
   PortfolioData,
   PositionData,
   UserBalanceOptions,
-  UserDashboardResponse,
+  UserDashboardResponse
 } from "."
 
 // Interface for the Zerion API
@@ -30,7 +30,7 @@ export interface iZerionAPI {
    */
   getPortfolio(
     walletAddress: string,
-    currency?: string,
+    currency?: string
   ): Promise<PortfolioData>
 
   /**
@@ -41,7 +41,7 @@ export interface iZerionAPI {
    */
   getFungiblePositions(
     walletAddress: string,
-    options?: FungibleOptions,
+    options?: FungibleOptions
   ): Promise<Array<PositionData>>
 
   /**
@@ -52,7 +52,7 @@ export interface iZerionAPI {
    */
   fetchNFTs(
     walletAddress: string,
-    options?: NFTPositionOptions,
+    options?: NFTPositionOptions
   ): Promise<Array<NFTPosition>>
 
   /**
@@ -63,7 +63,7 @@ export interface iZerionAPI {
    */
   getNativeTokens(
     chains: Array<ChainData>,
-    useStatic?: boolean,
+    useStatic?: boolean
   ): Promise<Record<string, FungibleTokenData>>
 }
 
@@ -84,6 +84,6 @@ export interface iZerionUI {
       fungibleOptions?: FungibleOptions
       options?: UserBalanceOptions
       useStatic?: boolean
-    },
+    }
   ): Promise<UserDashboardResponse>
 }

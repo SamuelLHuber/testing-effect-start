@@ -80,9 +80,9 @@ export default Layer.mergeAll(
       "v8",
       "node:v8",
       "worker_threads",
-      "node:worker_threads",
-    ],
-  }),
+      "node:worker_threads"
+    ]
+  })
 )
 
 if (import.meta.main) {

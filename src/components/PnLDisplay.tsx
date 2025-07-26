@@ -6,7 +6,7 @@ interface PnLDisplayProps {
 }
 
 export function PnLDisplay(
-  { realizedGainPercent, unrealizedGainPercent }: PnLDisplayProps,
+  { realizedGainPercent, unrealizedGainPercent }: PnLDisplayProps
 ) {
   const totalGainPercent = realizedGainPercent + unrealizedGainPercent
 
@@ -25,9 +25,7 @@ export function PnLDisplay(
             Realized
           </div>
           <div
-            className={`text-lg font-bold ${
-              realizedGainPercent >= 0 ? "text-success" : "text-error"
-            }`}
+            className={`text-lg font-bold ${realizedGainPercent >= 0 ? "text-success" : "text-error"}`}
           >
             {realizedGainPercent >= 0 ? "+" : ""}
             {formatPercentage(realizedGainPercent)}
@@ -69,9 +67,7 @@ export function PnLDisplay(
             Unrealized
           </div>
           <div
-            className={`text-lg font-bold ${
-              unrealizedGainPercent >= 0 ? "text-success" : "text-error"
-            }`}
+            className={`text-lg font-bold ${unrealizedGainPercent >= 0 ? "text-success" : "text-error"}`}
           >
             {unrealizedGainPercent >= 0 ? "+" : ""}
             {formatPercentage(unrealizedGainPercent)}
@@ -113,9 +109,7 @@ export function PnLDisplay(
             Total
           </div>
           <div
-            className={`text-lg font-bold ${
-              totalGainPercent >= 0 ? "text-success" : "text-error"
-            }`}
+            className={`text-lg font-bold ${totalGainPercent >= 0 ? "text-success" : "text-error"}`}
           >
             {totalGainPercent >= 0 ? "+" : ""}
             {formatPercentage(totalGainPercent)}

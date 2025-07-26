@@ -1,10 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import { processCompletePortfolioData } from "../lib/portfolio-data"
-import type {
-  ZerionPnLResponse,
-  ZerionPortfolioResponse,
-  ZerionPositionsResponse,
-} from "../lib/zerion-schemas"
+import type { ZerionPnLResponse, ZerionPortfolioResponse, ZerionPositionsResponse } from "../lib/zerion-schemas"
 
 // Fetch positions data
 export const usePositions = (address: string | undefined) => {
@@ -14,7 +10,7 @@ export const usePositions = (address: string | undefined) => {
       if (!address) throw new Error("Address is required")
 
       const response = await fetch(
-        `/api/positions?address=${address}&filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=value`,
+        `/api/positions?address=${address}&filter[positions]=only_simple&currency=usd&filter[trash]=only_non_trash&sort=value`
       )
       if (!response.ok) {
         const error = await response.json()
@@ -24,7 +20,7 @@ export const usePositions = (address: string | undefined) => {
     },
     enabled: !!address,
     staleTime: 1000 * 60 * 5, // 5 minutes
-    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    refetchInterval: 1000 * 60 * 10 // 10 minutes
   })
 }
 
@@ -36,7 +32,7 @@ export const usePortfolio = (address: string | undefined) => {
       if (!address) throw new Error("Address is required")
 
       const response = await fetch(
-        `/api/portfolio?address=${address}&filter[positions]=only_simple&currency=usd`,
+        `/api/portfolio?address=${address}&filter[positions]=only_simple&currency=usd`
       )
       if (!response.ok) {
         const error = await response.json()
@@ -46,7 +42,7 @@ export const usePortfolio = (address: string | undefined) => {
     },
     enabled: !!address,
     staleTime: 1000 * 60 * 5, // 5 minutes
-    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    refetchInterval: 1000 * 60 * 10 // 10 minutes
   })
 }
 
@@ -66,7 +62,7 @@ export const usePnL = (address: string | undefined) => {
     },
     enabled: !!address,
     staleTime: 1000 * 60 * 5, // 5 minutes
-    refetchInterval: 1000 * 60 * 10, // 10 minutes
+    refetchInterval: 1000 * 60 * 10 // 10 minutes
   })
 }
 
@@ -94,7 +90,7 @@ export const useCompletePortfolio = (address: string | undefined) => {
     return processCompletePortfolioData(
       positionsQuery.data,
       portfolioQuery.data,
-      pnlQuery.data,
+      pnlQuery.data
     )
   })()
 
@@ -117,6 +113,6 @@ export const useCompletePortfolio = (address: string | undefined) => {
       positionsQuery.refetch()
       portfolioQuery.refetch()
       pnlQuery.refetch()
-    },
+    }
   }
 }

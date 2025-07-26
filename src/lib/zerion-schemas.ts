@@ -10,7 +10,7 @@ export const ZerionPositionAttributesSchema = Schema.Struct({
     int: Schema.String,
     decimals: Schema.Number,
     float: Schema.Number,
-    numeric: Schema.String,
+    numeric: Schema.String
   }),
   value: Schema.Union(Schema.Number, Schema.Null),
   price: Schema.Number,
@@ -20,27 +20,27 @@ export const ZerionPositionAttributesSchema = Schema.Struct({
     symbol: Schema.String,
     icon: Schema.Union(
       Schema.Struct({
-        url: Schema.String,
+        url: Schema.String
       }),
-      Schema.Null,
+      Schema.Null
     ),
     flags: Schema.Struct({
-      verified: Schema.Boolean,
+      verified: Schema.Boolean
     }),
     implementations: Schema.Array(
       Schema.Struct({
         chain_id: Schema.String,
         address: Schema.Union(Schema.String, Schema.Null),
-        decimals: Schema.Number,
-      }),
-    ),
+        decimals: Schema.Number
+      })
+    )
   }),
   flags: Schema.Struct({
     displayable: Schema.Boolean,
-    is_trash: Schema.Boolean,
+    is_trash: Schema.Boolean
   }),
   updated_at: Schema.String,
-  updated_at_block: Schema.Number,
+  updated_at_block: Schema.Number
 })
 
 // Position schema
@@ -51,31 +51,31 @@ export const ZerionPositionSchema = Schema.Struct({
   relationships: Schema.optional(Schema.Struct({
     chain: Schema.Struct({
       links: Schema.Struct({
-        related: Schema.String,
+        related: Schema.String
       }),
       data: Schema.Struct({
         type: Schema.String,
-        id: Schema.String,
-      }),
+        id: Schema.String
+      })
     }),
     fungible: Schema.Struct({
       links: Schema.Struct({
-        related: Schema.String,
+        related: Schema.String
       }),
       data: Schema.Struct({
         type: Schema.String,
-        id: Schema.String,
-      }),
-    }),
-  })),
+        id: Schema.String
+      })
+    })
+  }))
 })
 
 // Positions response schema
 export const ZerionPositionsResponseSchema = Schema.Struct({
   links: Schema.Struct({
-    self: Schema.String,
+    self: Schema.String
   }),
-  data: Schema.Array(ZerionPositionSchema),
+  data: Schema.Array(ZerionPositionSchema)
 })
 
 // Portfolio data schema (based on existing types)
@@ -88,28 +88,28 @@ export const ZerionPortfolioDataSchema = Schema.Struct({
       deposited: Schema.Number,
       borrowed: Schema.Number,
       locked: Schema.Number,
-      staked: Schema.Number,
+      staked: Schema.Number
     }),
     positions_distribution_by_chain: Schema.Record({
       key: Schema.String,
-      value: Schema.Number,
+      value: Schema.Number
     }),
     total: Schema.Struct({
-      positions: Schema.Number,
+      positions: Schema.Number
     }),
     changes: Schema.Struct({
       absolute_1d: Schema.Number,
-      percent_1d: Schema.Number,
-    }),
-  }),
+      percent_1d: Schema.Number
+    })
+  })
 })
 
 // Portfolio response schema
 export const ZerionPortfolioResponseSchema = Schema.Struct({
   links: Schema.Struct({
-    self: Schema.String,
+    self: Schema.String
   }),
-  data: ZerionPortfolioDataSchema,
+  data: ZerionPortfolioDataSchema
 })
 
 // PnL data schema (flexible since no existing types)
@@ -119,17 +119,17 @@ export const ZerionPnLDataSchema = Schema.Struct({
   attributes: Schema.optional(
     Schema.Record({
       key: Schema.String,
-      value: Schema.Union(Schema.Number, Schema.String, Schema.Null),
-    }),
-  ),
+      value: Schema.Union(Schema.Number, Schema.String, Schema.Null)
+    })
+  )
 })
 
 // PnL response schema
 export const ZerionPnLResponseSchema = Schema.Struct({
   links: Schema.Struct({
-    self: Schema.String,
+    self: Schema.String
   }),
-  data: ZerionPnLDataSchema,
+  data: ZerionPnLDataSchema
 })
 
 // Type exports
