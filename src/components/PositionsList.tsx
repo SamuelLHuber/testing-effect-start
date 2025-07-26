@@ -1,3 +1,4 @@
+import { useState } from "preact/hooks"
 import { formatPercentage, generateChartColors } from "../lib/portfolio-data"
 import type { ProcessedPosition } from "../lib/zerion-types"
 
@@ -6,7 +7,9 @@ interface PositionsListProps {
   maxItems?: number
 }
 
-export function PositionsList({ maxItems, positions }: PositionsListProps) {
+export function PositionsList({ maxItems = 6, positions }: PositionsListProps) {
+  const [showAll, setShowAll] = useState(false)
+
   if (positions.length === 0) {
     return (
       <div className="text-center py-8">
@@ -17,8 +20,17 @@ export function PositionsList({ maxItems, positions }: PositionsListProps) {
     )
   }
 
-  const displayPositions = maxItems ? positions.slice(0, maxItems) : positions
+  const visiblePositions = positions.slice(0, maxItems)
+  const hiddenPositions = positions.slice(maxItems)
+  const hasHiddenPositions = hiddenPositions.length > 0
+
+  // Calculate "Others" percentage if there are hidden positions
+  const othersPercentage = hasHiddenPositions
+    ? hiddenPositions.reduce((sum, pos) => sum + pos.percentage, 0)
+    : 0
+
   const colors = generateChartColors(positions.length)
+  const displayPositions = showAll ? positions : visiblePositions
 
   return (
     <div className="space-y-3">
@@ -37,15 +49,22 @@ export function PositionsList({ maxItems, positions }: PositionsListProps) {
 
             {/* Token info */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              {position.icon && (
+              {position.icon ? (
                 <img
                   src={position.icon}
                   alt={position.symbol}
                   className="w-6 h-6 rounded-full flex-shrink-0"
                   onError={(e) => {
-                    e.currentTarget.style.display = "none"
+                    const fallback = document.createElement('div')
+                    fallback.className = "w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center"
+                    fallback.innerHTML = '<span class="text-xs text-base-content/50">?</span>'
+                    e.currentTarget.parentNode?.replaceChild(fallback, e.currentTarget)
                   }}
                 />
+              ) : (
+                <div className="w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center">
+                  <span className="text-xs text-base-content/50">?</span>
+                </div>
               )}
 
               <div className="min-w-0 flex-1">
@@ -83,12 +102,82 @@ export function PositionsList({ maxItems, positions }: PositionsListProps) {
         </div>
       ))}
 
-      {/* Show count if there are more items */}
-      {maxItems && positions.length > maxItems && (
+      {/* Others expandable section */}
+      {hasHiddenPositions && !showAll && (
+        <div
+          className="flex items-center justify-between p-3 rounded-lg bg-base-100 hover:bg-base-200 transition-colors cursor-pointer"
+          onClick={() => setShowAll(true)}
+        >
+          {/* Left side: Others indicator */}
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            {/* Color indicator */}
+            <div
+              className="w-3 h-3 rounded-full flex-shrink-0"
+              style={{ backgroundColor: colors[maxItems] || "#64748b" }}
+            />
+
+            {/* Others info */}
+            <div className="flex items-center gap-2 min-w-0 flex-1">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-base-content">
+                    Others
+                  </span>
+                  <span className="text-sm text-base-content/60">
+                    ({hiddenPositions.length} assets)
+                  </span>
+                </div>
+                <div className="text-sm text-base-content/60">
+                  Click to expand
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right side: Percentage and expand icon */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="font-bold text-base-content">
+              {formatPercentage(othersPercentage)}
+            </div>
+            <svg
+              className="w-4 h-4 text-base-content/60"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </div>
+        </div>
+      )}
+
+      {/* Collapse button when showing all */}
+      {showAll && hasHiddenPositions && (
         <div className="text-center py-2">
-          <span className="text-sm text-base-content/50">
-            +{positions.length - maxItems} more positions
-          </span>
+          <button
+            onClick={() => setShowAll(false)}
+            className="text-sm text-base-content/70 hover:text-base-content transition-colors flex items-center gap-1 mx-auto"
+          >
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 15l7-7 7 7"
+              />
+            </svg>
+            Show less
+          </button>
         </div>
       )}
     </div>
