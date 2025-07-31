@@ -1,3 +1,4 @@
+import { sdk } from "@farcaster/miniapp-sdk"
 import { type ComponentChildren, createContext } from "preact"
 import { useContext, useEffect, useState } from "preact/hooks"
 
@@ -24,18 +25,8 @@ export function MiniAppProvider({ children }: MiniAppProviderProps) {
 
     const initializeMiniApp = async () => {
       try {
-        // Use require() instead of import() for better compatibility
-        const miniappSdk = (globalThis as any).require
-          ? (globalThis as any).require("@farcaster/miniapp-sdk")
-          : await new Function("return import(\"@farcaster/miniapp-sdk\")")()
-
-        const sdk = miniappSdk.sdk || miniappSdk.default?.sdk
-        if (sdk && sdk.actions && sdk.actions.ready) {
-          sdk.actions.ready()
-          setIsReady(true)
-        } else {
-          throw new Error("SDK not properly loaded")
-        }
+        await sdk.actions.ready()
+        setIsReady(true)
       } catch (err) {
         console.error("Failed to initialize MiniApp SDK:", err)
         setError(
