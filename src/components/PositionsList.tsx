@@ -49,23 +49,30 @@ export function PositionsList({ maxItems = 6, positions }: PositionsListProps) {
 
             {/* Token info */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              {position.icon ? (
-                <img
-                  src={position.icon}
-                  alt={position.symbol}
-                  className="w-6 h-6 rounded-full flex-shrink-0"
-                  onError={(e) => {
-                    const fallback = document.createElement('div')
-                    fallback.className = "w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center"
-                    fallback.innerHTML = '<span class="text-xs text-base-content/50">?</span>'
-                    e.currentTarget.parentNode?.replaceChild(fallback, e.currentTarget)
-                  }}
-                />
-              ) : (
-                <div className="w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center">
-                  <span className="text-xs text-base-content/50">?</span>
-                </div>
-              )}
+              {position.icon ?
+                (
+                  <img
+                    src={position.icon}
+                    alt={position.symbol}
+                    className="w-6 h-6 rounded-full flex-shrink-0"
+                    onError={(e) => {
+                      const fallback = document.createElement("div")
+                      fallback.className =
+                        "w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center"
+                      fallback.innerHTML =
+                        "<span class=\"text-xs text-base-content/50\">?</span>"
+                      e.currentTarget.parentNode?.replaceChild(
+                        fallback,
+                        e.currentTarget,
+                      )
+                    }}
+                  />
+                ) :
+                (
+                  <div className="w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center">
+                    <span className="text-xs text-base-content/50">?</span>
+                  </div>
+                )}
 
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
