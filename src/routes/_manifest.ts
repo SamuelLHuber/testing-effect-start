@@ -20,6 +20,11 @@ const server__api__debug = {
   load: () => import("./api/debug/_server.ts"),
 } as const
 
+const server__api__embed = {
+  path: "/api/embed",
+  load: () => import("./api/embed/_server.ts"),
+} as const
+
 const server__api__pnl = {
   path: "/api/pnl",
   load: () => import("./api/pnl/_server.ts"),
@@ -45,6 +50,7 @@ export const Pages: Router.PageRoutes = [
 
 export const Servers: Router.ServerRoutes = [
   server__api__debug,
+  server__api__embed,
   server__api__pnl,
   server__api__portfolio,
   server__api__positions
