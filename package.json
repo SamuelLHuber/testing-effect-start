@@ -6,7 +6,9 @@
     "start": "bun src/server.ts",
     "dev": "bun --hot --no-clear-screen src/server.ts",
     "lint": "eslint . --fix && dprint fmt",
+    "lint:file": "eslint --fix",
     "check": "eslint . && dprint check",
+    "check:file": "eslint",
     "test": "vitest"
   },
   "dependencies": {
