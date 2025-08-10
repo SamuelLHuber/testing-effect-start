@@ -1,6 +1,8 @@
 import { HttpServerRequest, HttpServerResponse } from "@effect/platform"
 import { Effect } from "effect"
 
+import getFCembed from "../../../lib/farcaster/embed"
+
 export const GET = Effect.gen(function*() {
   const request = yield* HttpServerRequest.HttpServerRequest
 
@@ -20,13 +22,18 @@ export const GET = Effect.gen(function*() {
   }
 
   // TODO: use @dtech farcaster utils for aid on the embed
-  const miniAppEmbed = JSON.stringify("TODO")
+  const appUrl = `https://${request.headers.host}`
+  const imageUrl = `${appUrl}/api/image/address/${address}`
+  const miniAppEmbed = getFCembed({
+    appUrl,
+    imageUrl,
+  })
 
   return yield* HttpServerResponse.html(`
     <html>
       <head>
         <meta>
-          <meta name="fc:miniapp" content="${miniAppEmbed}"/>
+          <meta name="fc:miniapp" content="${JSON.stringify(miniAppEmbed)}"/>
         </meta>
       </head>
       <body>
