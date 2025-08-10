@@ -49,8 +49,8 @@ export function PositionsList({ maxItems = 6, positions }: PositionsListProps) {
 
             {/* Token info */}
             <div className="flex items-center gap-2 min-w-0 flex-1">
-              {position.icon ?
-                (
+              {position.icon
+                ? (
                   <img
                     src={position.icon}
                     alt={position.symbol}
@@ -67,10 +67,12 @@ export function PositionsList({ maxItems = 6, positions }: PositionsListProps) {
                       )
                     }}
                   />
-                ) :
-                (
+                )
+                : (
                   <div className="w-6 h-6 rounded-full flex-shrink-0 bg-base-300 flex items-center justify-center">
-                    <span className="text-xs text-base-content/50">?</span>
+                    <span className="text-xs text-base-content/50">
+                      ?
+                    </span>
                   </div>
                 )}
 
