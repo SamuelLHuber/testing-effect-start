@@ -7,6 +7,7 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   return (
     <div>
+      <span>Root</span>
       <div>
         {props.children}
       </div>

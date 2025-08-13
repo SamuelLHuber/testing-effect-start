@@ -1,17 +1,28 @@
 import type { ManifestType } from "./schema"
 
-export default function getFCmanifest(
-  accountAssociationHeader: string,
-  accountAssociationPayload: string,
-  accountAssociationSignature: string,
-  name: string = "dTech.vision",
-  homeUrl: string = "https://dtech.vision",
-  iconUrl: string = "https://dtech.vision/icon.png",
-  buttonTitle: string = "Hire dTech",
-  imageUrl: string = "https://dtech.vision/miniapp.png",
-  splashImageUrl?: string,
-  splashBackgroundColor: string = "#F7F7F7",
-): ManifestType {
+export default function getFCmanifest({
+  accountAssociationHeader,
+  accountAssociationPayload,
+  accountAssociationSignature,
+  buttonTitle = "Hire dTech",
+  homeUrl = "https://dtech.vision",
+  iconUrl = "https://dtech.vision/icon.png",
+  imageUrl = "https://dtech.vision/miniapp.png",
+  name = "dTech.vision",
+  splashBackgroundColor = "#F7F7F7",
+  splashImageUrl,
+}: {
+  accountAssociationHeader: string
+  accountAssociationPayload: string
+  accountAssociationSignature: string
+  name?: string
+  homeUrl?: string
+  iconUrl?: string
+  buttonTitle?: string
+  imageUrl?: string
+  splashImageUrl?: string
+  splashBackgroundColor?: string
+}): ManifestType {
   return {
     accountAssociation: {
       header: accountAssociationHeader,
@@ -25,7 +36,7 @@ export default function getFCmanifest(
       iconUrl: new URL(iconUrl),
       imageUrl: new URL(imageUrl),
       buttonTitle,
-      splashImageUrl: new URL(splashImageUrl || ""),
+      ...(splashImageUrl && { splashImageUrl: new URL(splashImageUrl) }),
       splashBackgroundColor,
     },
   }

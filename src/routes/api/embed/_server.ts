@@ -3,7 +3,7 @@ import { Effect } from "effect"
 
 import getFCembed from "../../../lib/farcaster/embed"
 
-export const GET = Effect.gen(function*() {
+export const GET = Effect.fn("api/embed")(function*() {
   const request = yield* HttpServerRequest.HttpServerRequest
 
   // Extract query parameters from URL

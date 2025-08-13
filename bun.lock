@@ -11,7 +11,7 @@
         "@tanstack/react-query": "^5.83.0",
         "daisyui": "^5.0.46",
         "effect": "^3.16.12",
-        "effect-start": "github:nounder/effect-start",
+        "effect-start": "github:nounder/effect-start#82e9982",
         "lightningcss": "^1.30.1",
         "preact": "^10.26.8",
         "preact-iso": "^2.9.1",
@@ -839,7 +839,7 @@
 
     "effect": ["effect@3.16.12", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "fast-check": "^3.23.1" } }, "sha512-N39iBk0K71F9nb442TLbTkjl24FLUzuvx2i1I2RsEAQsdAdUTuUoW0vlfUXgkMTUOnYqKnWcFfqw4hK4Pw27hg=="],
 
-    "effect-start": ["effect-start@github:nounder/effect-start#6850d26", { "peerDependencies": { "@effect/platform": ">=0.82", "@effect/platform-bun": ">=0.65", "@tailwindcss/node": "^4.1.7", "@tanstack/react-router": "^1.120.10", "effect": ">=3.16.4", "typescript": "^5.8.3" }, "optionalPeers": ["@effect/platform", "@effect/platform-bun", "@tailwindcss/node", "@tanstack/react-router"] }, "nounder-effect-start-6850d26"],
+    "effect-start": ["effect-start@github:nounder/effect-start#82e9982", { "peerDependencies": { "@effect/platform": ">=0.82", "@effect/platform-bun": ">=0.65", "@tailwindcss/node": "^4.1.7", "@tanstack/react-router": "^1.120.10", "effect": ">=3.16.4", "typescript": "^5.8.3" }, "optionalPeers": ["@effect/platform", "@effect/platform-bun", "@tailwindcss/node", "@tanstack/react-router"] }, "nounder-effect-start-82e9982"],
 
     "electron-to-chromium": ["electron-to-chromium@1.5.190", "", {}, "sha512-k4McmnB2091YIsdCgkS0fMVMPOJgxl93ltFzaryXqwip1AaxeDqKCGLxkXODDA5Ab/D+tV5EL5+aTx76RvLRxw=="],
 

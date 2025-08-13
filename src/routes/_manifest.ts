@@ -15,6 +15,17 @@ const page__ = {
   load: () => import("./_page.tsx"),
 } as const
 
+const page__about = {
+  path: "/about",
+  parent: layout__,
+  load: () => import("./about/_page.tsx"),
+} as const
+
+const server___well_known__farcaster_json = {
+  path: "/.well-known/farcaster.json",
+  load: () => import("./.well-known/farcaster.json/_server.ts"),
+} as const
+
 const server__api__debug = {
   path: "/api/debug",
   load: () => import("./api/debug/_server.ts"),
@@ -45,10 +56,12 @@ export const Layouts: Router.LayoutRoutes = [
 ] as const
 
 export const Pages: Router.PageRoutes = [
-  page__
+  page__,
+  page__about
 ] as const
 
 export const Servers: Router.ServerRoutes = [
+  server___well_known__farcaster_json,
   server__api__debug,
   server__api__embed,
   server__api__pnl,
