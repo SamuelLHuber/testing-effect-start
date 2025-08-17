@@ -15,12 +15,6 @@ const page__ = {
   load: () => import("./_page.tsx"),
 } as const
 
-const page__about = {
-  path: "/about",
-  parent: layout__,
-  load: () => import("./about/_page.tsx"),
-} as const
-
 const server___well_known__farcaster_json = {
   path: "/.well-known/farcaster.json",
   load: () => import("./.well-known/farcaster.json/_server.ts"),
@@ -56,8 +50,7 @@ export const Layouts: Router.LayoutRoutes = [
 ] as const
 
 export const Pages: Router.PageRoutes = [
-  page__,
-  page__about
+  page__
 ] as const
 
 export const Servers: Router.ServerRoutes = [

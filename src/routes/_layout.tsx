@@ -1,4 +1,5 @@
 import type { ComponentChildren } from "preact"
+import { MiniAppProvider } from "../components/miniapp"
 
 interface LayoutProps {
   children: ComponentChildren
@@ -7,10 +8,11 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   return (
     <div>
-      <span>Root</span>
-      <div>
-        {props.children}
-      </div>
+      <MiniAppProvider>
+        <div>
+          {props.children}
+        </div>
+      </MiniAppProvider>
     </div>
   )
 }

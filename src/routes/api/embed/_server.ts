@@ -3,7 +3,7 @@ import { Effect } from "effect"
 
 import getFCembed from "../../../lib/farcaster/embed"
 
-export const GET = Effect.fn("api/embed")(function*() {
+export const GET = Effect.gen(function*() {
   const request = yield* HttpServerRequest.HttpServerRequest
 
   // Extract query parameters from URL
@@ -24,6 +24,7 @@ export const GET = Effect.fn("api/embed")(function*() {
   // TODO: use @dtech farcaster utils for aid on the embed
   const appUrl = `https://${request.headers.host}`
   const imageUrl = `${appUrl}/api/image/address/${address}`
+
   const miniAppEmbed = getFCembed({
     appUrl,
     imageUrl,
@@ -33,6 +34,7 @@ export const GET = Effect.fn("api/embed")(function*() {
     <html>
       <head>
         <meta>
+          <meta name="fc:frame" content="${JSON.stringify(miniAppEmbed)}"/>
           <meta name="fc:miniapp" content="${JSON.stringify(miniAppEmbed)}"/>
         </meta>
       </head>
