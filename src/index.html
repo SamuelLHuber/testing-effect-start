@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>dTech - Waitlist Template</title>
+    <title>dTech - Zerion</title>
     <link
       rel="icon"
       href="../public/favicon.ico"
     />
     <meta
-      name="fc:frame"
-      content='{"version":"next","imageUrl":"https://dtech.vision/miniapp.png","button":{"title":"Check my wallet","action":{"type":"launch_frame","name":"dTech x Zerion","url":"http://localhost:3000","splashImageUrl":"https://dtech.vision/icon.png","splashBackgroundColor":"#f7f7f7"}}}'
+      name="fc:miniapp"
+      content='{"version":"next","imageUrl":"https://dtech.vision/miniapp.png","button":{"title":"Check my wallet","action":{"type":"launch_frame","name":"dTech x Zerion","url":"https://zport.dtech.gg","splashImageUrl":"https://dtech.vision/icon.png","splashBackgroundColor":"#f7f7f7"}}}'
     />
   </head>
   <body>
     <div id="app"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@farcaster/frame-sdk/dist/index.min.js"></script>
-    <script>
-    frame.sdk.actions.ready()
-    </script>
     <script
       type="module"
       src="./client.tsx"
