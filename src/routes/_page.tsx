@@ -1,4 +1,4 @@
-import { useAccount } from "wagmi"
+import { useAccount, useDisconnect } from "wagmi"
 import { DonutChart } from "../components/DonutChart"
 import { PnLDisplay } from "../components/PnLDisplay"
 import { PositionsList } from "../components/PositionsList"
@@ -8,6 +8,7 @@ import { useCompletePortfolio } from "../hooks/usePortfolio"
 
 export default function() {
   const { address, isConnected } = useAccount()
+  const { disconnect } = useDisconnect()
   const { data: portfolioData, error, isError, isLoading } =
     useCompletePortfolio(address)
 
@@ -121,13 +122,7 @@ export default function() {
                       </div>
                       <button
                         className="btn btn-ghost btn-xs mt-2"
-                        onClick={() => {
-                          // This will trigger wallet disconnect
-                          const walletComponent = document.querySelector(
-                            "[data-testid=\"wallet-disconnect\"]",
-                          ) as HTMLButtonElement
-                          walletComponent?.click()
-                        }}
+                        onClick={disconnect} 
                       >
                         Disconnect
                       </button>
