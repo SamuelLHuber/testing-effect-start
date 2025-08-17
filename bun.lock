@@ -7,6 +7,7 @@
         "@effect/platform": "^0.84.11",
         "@effect/platform-bun": "^0.67.3",
         "@farcaster/miniapp-sdk": "^0.1.7",
+        "@farcaster/miniapp-wagmi-connector": "^1.0.0",
         "@preact/signals": "^2.2.0",
         "@tanstack/react-query": "^5.83.0",
         "daisyui": "^5.0.46",
@@ -222,6 +223,8 @@
     "@farcaster/miniapp-core": ["@farcaster/miniapp-core@0.3.6", "", { "dependencies": { "@solana/web3.js": "^1.98.2", "ox": "^0.4.4", "zod": "^3.25.0" } }, "sha512-PKQmDKVf/ljoscYHUgUiRgsQCrJ+etgdyFOLUlhDKWI5Rw9AyG43PKrSmee0RduvV4S9w4LAPoUcx3YwWmAsrw=="],
 
     "@farcaster/miniapp-sdk": ["@farcaster/miniapp-sdk@0.1.7", "", { "dependencies": { "@farcaster/miniapp-core": "0.3.6", "@farcaster/quick-auth": "^0.0.6", "comlink": "^4.4.2", "eventemitter3": "^5.0.1", "ox": "^0.4.4" } }, "sha512-6Ph/mlGCOYLVm1+3ORHW3rIVEceWxvJIHWfHp2NbKAeobna11lAV1zx2fpEXu+HIKJ614fg+UjmlK9JORCRgEw=="],
+
+    "@farcaster/miniapp-wagmi-connector": ["@farcaster/miniapp-wagmi-connector@1.0.0", "", { "peerDependencies": { "@farcaster/miniapp-sdk": "^0.1.0", "@wagmi/core": "^2.14.1", "viem": "^2.21.55" } }, "sha512-vMRZbekUUctnAUvBFhNoEsJlujRRdxop94fDy5LrKiRR9ax0wtp8gCvLYO+LpaP2PtGs0HFpRwlHNDJWvBR8bg=="],
 
     "@farcaster/quick-auth": ["@farcaster/quick-auth@0.0.6", "", { "dependencies": { "jose": "^5.2.3", "zod": "^3.25.1" }, "peerDependencies": { "typescript": "5.8.3" } }, "sha512-tiZndhpfDtEhaKlkmS5cVDuS+A/tafqZT3y9I44rC69m3beJok6e8dIH2JhxVy3EvOWTyTBnrmNn6GOOh+qK6A=="],
 

@@ -1,13 +1,13 @@
+import { farcasterFrame as miniapp } from "@farcaster/miniapp-wagmi-connector"
 import { injected } from "@wagmi/core"
 import { createConfig, http } from "wagmi"
-import { mainnet, sepolia } from "wagmi/chains"
+import { base } from "wagmi/chains"
 
 export const config = createConfig({
-  chains: [mainnet, sepolia],
-  connectors: [injected()],
+  chains: [base],
+  connectors: [injected(), miniapp()],
   transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
+    [base.id]: http(),
   },
 })
 
