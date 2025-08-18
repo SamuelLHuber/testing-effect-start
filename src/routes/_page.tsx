@@ -5,6 +5,7 @@ import { PositionsList } from "../components/PositionsList"
 import { ShareButton } from "../components/ShareButton"
 import { Wallet } from "../components/Wallet"
 import { useCompletePortfolio } from "../hooks/usePortfolio"
+import { copySVGToClipboard, generateStandaloneSVG } from "../lib/svg-export"
 
 export default function() {
   const { address, isConnected } = useAccount()
@@ -12,9 +13,55 @@ export default function() {
   const { data: portfolioData, error, isError, isLoading } =
     useCompletePortfolio(address)
 
-  const handleShare = () => {
-    // TODO: Implement share functionality
-    console.log("Share portfolio")
+  const handleShare = async () => {
+    if (!portfolioData) return
+
+    const positions = [
+      ...portfolioData.topPositions,
+      ...(portfolioData.others ? [portfolioData.others] : []),
+    ]
+
+    // Try copying the SVG to clipboard first
+    const success = await copySVGToClipboard(positions, {
+      size: 280,
+      strokeWidth: 45,
+      includeBackground: true,
+      theme: "light",
+    })
+
+    if (success) {
+      // Show success feedback - could be replaced with toast notification
+      console.log(
+        "Portfolio chart copied to clipboard! You can now paste it anywhere.",
+      )
+
+      // Optional: Try native share API if available
+      if (navigator.share) {
+        try {
+          const svg = generateStandaloneSVG(positions, {
+            size: 280,
+            strokeWidth: 45,
+            includeBackground: true,
+            theme: "light",
+          })
+
+          const blob = new Blob([svg], { type: "image/svg+xml" })
+          const file = new File([blob], "portfolio-chart.svg", {
+            type: "image/svg+xml",
+          })
+
+          await navigator.share({
+            title: "My Portfolio Overview",
+            text: "Check out my crypto portfolio breakdown",
+            files: [file],
+          })
+        } catch {
+          console.log("Native share failed, but SVG was copied to clipboard")
+        }
+      }
+    } else {
+      console.error("Failed to copy SVG to clipboard")
+    }
   }
 
   return (
@@ -122,7 +169,7 @@ export default function() {
                       </div>
                       <button
                         className="btn btn-ghost btn-xs mt-2"
-                        onClick={disconnect} 
+                        onClick={disconnect}
                       >
                         Disconnect
                       </button>

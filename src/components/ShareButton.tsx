@@ -1,5 +1,5 @@
 interface ShareButtonProps {
-  onShare: () => void
+  onShare: () => void | Promise<void>
   disabled?: boolean
 }
 
