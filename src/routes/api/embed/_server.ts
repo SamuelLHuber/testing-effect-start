@@ -28,6 +28,7 @@ export const GET = Effect.gen(function*() {
   const miniAppEmbed = getFCembed({
     appUrl,
     imageUrl,
+    buttonTitle: "See my portfolio!",
   })
   const jsonEmbed = JSON.stringify(miniAppEmbed)
 
