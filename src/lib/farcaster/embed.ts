@@ -30,7 +30,7 @@ and so on.
  * @param {string} [options.name="dTech.vision"] - The name of the app in the embed frame.
  * @param {string} [options.splashImageUrl="https://dtech.vision/icon.png"] - The splash image URL for the embed frame.
  * @param {string} [options.splashBackgroundColor="#f7f7f7"] - The background color for the splash image in the embed frame.
- * @returns {FrameEmbedNext} A Frame Embed object with the specified properties.
+ * @returns {FrameEmbedNext} A Frame Embed object with the specified properties, which you need to stringify to embed!
  */
 export default function getFCembed({
   appUrl = "https://dtech.vision",

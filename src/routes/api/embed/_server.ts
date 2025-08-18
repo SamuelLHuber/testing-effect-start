@@ -29,13 +29,13 @@ export const GET = Effect.gen(function*() {
     appUrl,
     imageUrl,
   })
+  const jsonEmbed = JSON.stringify(miniAppEmbed)
 
-  return yield* HttpServerResponse.html(`
+  const response = `
     <html>
       <head>
         <meta>
-          <meta name="fc:frame" content="${JSON.stringify(miniAppEmbed)}"/>
-          <meta name="fc:miniapp" content="${JSON.stringify(miniAppEmbed)}"/>
+          <meta name="fc:miniapp" content='${jsonEmbed}'/>
         </meta>
       </head>
       <body>
@@ -44,5 +44,7 @@ export const GET = Effect.gen(function*() {
         </script>
       </body>
     </html>
-  `)
+  `
+
+  return yield* HttpServerResponse.html(response)
 })
