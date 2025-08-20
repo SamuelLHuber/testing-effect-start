@@ -45,6 +45,11 @@ const server__api__positions = {
   load: () => import("./api/positions/_server.ts"),
 } as const
 
+const server__api__embed__image = {
+  path: "/api/embed/image",
+  load: () => import("./api/embed/image/_server.ts"),
+} as const
+
 export const Layouts: Router.LayoutRoutes = [
   layout__
 ] as const
@@ -59,6 +64,7 @@ export const Servers: Router.ServerRoutes = [
   server__api__embed,
   server__api__pnl,
   server__api__portfolio,
-  server__api__positions
+  server__api__positions,
+  server__api__embed__image
 ] as const
  

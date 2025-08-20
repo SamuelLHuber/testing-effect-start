@@ -23,7 +23,7 @@ export const GET = Effect.gen(function*() {
 
   // TODO: use @dtech farcaster utils for aid on the embed
   const appUrl = `https://${request.headers.host}`
-  const imageUrl = `${appUrl}/api/image/address/${address}`
+  const imageUrl = `${appUrl}/api/embed/image/address/${address}`
 
   const miniAppEmbed = getFCembed({
     appUrl,

@@ -14,14 +14,41 @@ export default function() {
     useCompletePortfolio(address)
 
   const handleShare = async () => {
-    if (!portfolioData) return
+    if (!portfolioData || !address) return
 
     const positions = [
       ...portfolioData.topPositions,
       ...(portfolioData.others ? [portfolioData.others] : []),
     ]
 
-    // Try copying the SVG to clipboard first
+    // Generate SVG for caching and sharing
+    const svg = generateStandaloneSVG(positions, {
+      size: 280,
+      strokeWidth: 45,
+      includeBackground: true,
+      theme: "light",
+    })
+
+    // Cache the SVG on the server
+    try {
+      const response = await fetch(`/api/embed/image?address=${address}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: svg,
+      })
+
+      if (response.ok) {
+        console.log("Portfolio chart cached successfully!")
+      } else {
+        console.warn("Failed to cache portfolio chart")
+      }
+    } catch (error) {
+      console.warn("Error caching portfolio chart:", error)
+    }
+
+    // Try copying the SVG to clipboard
     const success = await copySVGToClipboard(positions, {
       size: 280,
       strokeWidth: 45,
@@ -38,13 +65,6 @@ export default function() {
       // Optional: Try native share API if available
       if (navigator.share) {
         try {
-          const svg = generateStandaloneSVG(positions, {
-            size: 280,
-            strokeWidth: 45,
-            includeBackground: true,
-            theme: "light",
-          })
-
           const blob = new Blob([svg], { type: "image/svg+xml" })
           const file = new File([blob], "portfolio-chart.svg", {
             type: "image/svg+xml",

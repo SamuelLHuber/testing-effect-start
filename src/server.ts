@@ -1,8 +1,10 @@
 import { Layer } from "effect"
 import { BunTailwindPlugin, Start } from "effect-start"
+import { RedisLive } from "./lib/redis"
 
 export default Layer.mergeAll(
   Start.router(() => import("./routes/_manifest")),
+  RedisLive,
   Start.bundleClient({
     entrypoints: ["src/index.html"],
     plugins: [BunTailwindPlugin.make()],
