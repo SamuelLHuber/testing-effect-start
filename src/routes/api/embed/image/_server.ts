@@ -201,10 +201,4 @@ export const POST = Effect.gen(function*() {
     { success: true, message: "Image cached successfully" },
     { status: 200 },
   )
-
-  // This should not happen with the current implementation, but handle it just in case
-  // return yield* HttpServerResponse.json(
-  //   { success: false, message: "Unexpected error occurred" },
-  //   { status: 500 },
-  // )
 })
